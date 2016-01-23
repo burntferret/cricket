@@ -2,22 +2,24 @@ package com.stag.cricket.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.stag.cricket.camera.OrthoCamera;
 import com.stag.cricket.entity.DirectionalCluster;
+import com.stag.cricket.entity.FireButton;
 
 public class InputManager {
 	
 	/**
 	 * If touches are sensed within the directional pad constraints, calculates and returns direction.<br>
 	 * If no touches are found within the constraints, sees if there are any keyboard directional inputs.
-	 * @param camera
 	 * @param directionalCluster
+	 * @param touches
 	 * @return
 	 */
-	public static DirectionEnum getDirection(OrthoCamera camera, DirectionalCluster directionalCluster) {
-		Vector2 directionalPadTouch = directionalCluster.getDirectionalPadTouch(camera);
+	public static DirectionEnum getDirection(DirectionalCluster directionalCluster, Array<Vector2> touches) {
+		Vector2 directionalPadTouch = directionalCluster.getDirectionalPadTouch(touches);
 		
 		if(directionalPadTouch != null) {
 			return directionalCluster.getTouchInputDirection(directionalPadTouch);
@@ -25,6 +27,27 @@ public class InputManager {
 			directionalCluster.setDirectionalButtonToCenter();
 			return getKeyBoardInputDirection();
 		}
+	}
+	
+	/**
+	 * If touches are sensed within the fire button constraints, returns true, else checks to see if
+	 * the space bar was pressed.
+	 * @param fireButton
+	 * @param touches
+	 * @return
+	 */
+	public static boolean isFireButtonPressed(FireButton fireButton, Array<Vector2> touches) {
+		if(touches != null && touches.size > 0) {
+			Circle area = new Circle(fireButton.getCenter(), fireButton.getTexture().getWidth()/2);
+			
+			for(Vector2 touch : touches) {
+				if(area.contains(touch)) {
+					return true;
+				}
+			}
+		}
+		
+		return Gdx.input.isKeyPressed(Keys.SPACE);
 	}
 	
 	/**

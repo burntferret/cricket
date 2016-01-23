@@ -18,8 +18,9 @@ public class TextureManager {
 	// AMMO
 	public static Texture AMMO_RED_PLASMA = new Texture("ammo/red_plasma.png");
 	
-	
 	// CONTROLS
 	public static Texture DIRECTIONAL_PAD = new Texture("controls/directionPadOutline.png");
 	public static Texture DIRECTIONAL_BUTTON = new Texture("controls/directionButton.png");
+	public static Texture FIRE_BUTTON = new Texture("controls/fireButton.png");
+	
 }

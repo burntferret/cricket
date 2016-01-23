@@ -11,10 +11,12 @@ public class EntityManager {
 	private final Array<Entity> entities = new Array<Entity>();
 	private Player player;
 	private DirectionalCluster directionalCluster;
+	private FireButton fireButton;
 	
 	public EntityManager(OrthoCamera camera) {
 		this.directionalCluster = new DirectionalCluster();
-		this.player = new Player(new Vector2(15, MainCricket.HEIGHT/2 - Player.height()/2), new Vector2(0, 0), this, camera, this.directionalCluster);
+		this.fireButton = new FireButton();
+		this.player = new Player(new Vector2(15, MainCricket.HEIGHT/2 - Player.height()/2), new Vector2(0, 0), this, camera, this.directionalCluster, this.fireButton);
 	}
 	
 	public void addEntity(Entity entity) {
@@ -24,6 +26,7 @@ public class EntityManager {
 	public void update() {
 		this.player.update();
 		this.directionalCluster.update();
+		this.fireButton.update();
 		
 		// update all entities
 		for(Entity e : entities) {
@@ -45,6 +48,7 @@ public class EntityManager {
 		
 		this.player.render(spriteBatch);
 		this.directionalCluster.render(spriteBatch);
+		this.fireButton.render(spriteBatch);
 	}
 	
 	private Array<Projectile> getProjectiles() {

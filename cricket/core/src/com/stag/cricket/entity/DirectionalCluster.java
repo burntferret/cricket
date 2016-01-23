@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.stag.cricket.TextureManager;
-import com.stag.cricket.camera.OrthoCamera;
 import com.stag.cricket.input.DirectionEnum;
 import com.stag.cricket.input.InputManager;
 import com.stag.cricket.utils.math.Geometry;
@@ -44,15 +43,18 @@ public class DirectionalCluster extends EntityCluster {
 	/**
 	 * Retrieves the first touch within the circle containing the directional pad.<br>
 	 * If there are none, returns null.
-	 * @param camera
+	 * @param touches
 	 * @return
 	 */
-	public Vector2 getDirectionalPadTouch(OrthoCamera camera) {
-		Circle directionalPadBounds = new Circle(this.pad.getCenter(), new Vector2(this.pad.getCenter().x + this.pad.getTexture().getWidth()/2, this.pad.getCenter().y));
+	public Vector2 getDirectionalPadTouch(Array<Vector2> touches) {
+		if(touches != null && touches.size > 0) {
 		
-		for(Vector2 touch : InputManager.getTouches(camera)) {
-			if(directionalPadBounds.contains(touch)) {
-				return touch;
+			Circle directionalPadBounds = new Circle(this.pad.getCenter(), new Vector2(this.pad.getCenter().x + this.pad.getTexture().getWidth()/2, this.pad.getCenter().y));
+			
+			for(Vector2 touch : touches) {
+				if(directionalPadBounds.contains(touch)) {
+					return touch;
+				}
 			}
 		}
 		
