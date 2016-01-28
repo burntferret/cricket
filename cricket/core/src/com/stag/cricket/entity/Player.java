@@ -8,6 +8,12 @@ import com.stag.cricket.input.DirectionEnum;
 import com.stag.cricket.input.InputManager;
 
 public class Player extends Entity {
+
+	public static final int STARTING_FIRE_INTERVAL = 250; // in milliseconds
+	public static final int STARTING_LIVES = 3;
+	
+	public int currentScore; 
+	public int currentLives;
 	
 	private final EntityManager entityManager;
 	private final OrthoCamera camera;
@@ -15,8 +21,6 @@ public class Player extends Entity {
 	private final DirectionalCluster directionalCluster;
 	private final FireButton fireButton;
 	private Array<Vector2> touches;
-	
-	public static final int FIRE_INTERVAL = 250;
 	
 	public Player(Vector2 position, Vector2 direction, EntityManager entityManager, OrthoCamera camera, DirectionalCluster directionalCluster,
 			FireButton fireButton) {
@@ -26,6 +30,8 @@ public class Player extends Entity {
 		this.directionalCluster = directionalCluster;
 		this.fireButton = fireButton;
 		this.touches = new Array<Vector2>();
+		this.currentLives = STARTING_LIVES;
+		this.currentScore = 0;
 	}
 
 	@Override
@@ -91,7 +97,7 @@ public class Player extends Entity {
 		}
 		
 		if(isFireButtonPressed) {
-			if(System.currentTimeMillis() - this.lastFired >= FIRE_INTERVAL) {
+			if(System.currentTimeMillis() - this.lastFired >= STARTING_FIRE_INTERVAL) {
 				this.entityManager.addEntity(new Projectile(super.getPosition().cpy().add(texture.getWidth(), (texture.getHeight()/2 - TextureManager.AMMO_RED_PLASMA.getHeight()/2))));
 				this.lastFired = System.currentTimeMillis();
 			}

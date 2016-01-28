@@ -10,12 +10,12 @@ import com.stag.cricket.screen.ScreenManager;
 public class MainCricket extends ApplicationAdapter {
 	
 	public static int WIDTH = 800, HEIGHT = 480;
-	
-	SpriteBatch batch;
+	public static final int STARTING_LIVES = 3;
+	private SpriteBatch batch;
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
+		this.batch = new SpriteBatch();
 		ScreenManager.setScreen(new GameScreen());
 	}
 	

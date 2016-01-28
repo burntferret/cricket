@@ -50,4 +50,9 @@ public class GameScreen extends Screen {
 		
 	}
 
+	@Override
+	public Screen getNextScreen() {
+		return null;
+	}
+
 }

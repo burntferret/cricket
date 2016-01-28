@@ -3,6 +3,11 @@ package com.stag.cricket.screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class Screen {
+	
+	public boolean hasEnded = false;
+	public void setHasEnded(boolean hasEnded) {
+		this.hasEnded = hasEnded;
+	}
 
 	public abstract void create();
 	
@@ -18,4 +23,5 @@ public abstract class Screen {
 	
 	public abstract void resume();
 	
+	public abstract Screen getNextScreen();
 }
