@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.stag.cricket.TextureManager;
 import com.stag.cricket.camera.OrthoCamera;
+import com.stag.cricket.entity.ammo.Ammo;
+import com.stag.cricket.entity.ammo.Projectile;
 import com.stag.cricket.input.DirectionEnum;
 import com.stag.cricket.input.InputManager;
 
@@ -14,6 +16,8 @@ public class Player extends Entity {
 	
 	public int currentScore; 
 	public int currentLives;
+	public double speedMultiplier;
+	public Ammo ammo;
 	
 	private final EntityManager entityManager;
 	private final OrthoCamera camera;
@@ -32,6 +36,8 @@ public class Player extends Entity {
 		this.touches = new Array<Vector2>();
 		this.currentLives = STARTING_LIVES;
 		this.currentScore = 0;
+		this.ammo = Ammo.PLASMA;
+		this.speedMultiplier = 1d;
 	}
 
 	@Override
@@ -98,7 +104,8 @@ public class Player extends Entity {
 		
 		if(isFireButtonPressed) {
 			if(System.currentTimeMillis() - this.lastFired >= STARTING_FIRE_INTERVAL) {
-				this.entityManager.addEntity(new Projectile(super.getPosition().cpy().add(texture.getWidth(), (texture.getHeight()/2 - TextureManager.AMMO_RED_PLASMA.getHeight()/2))));
+				Vector2 position =  super.getPosition().cpy().add(texture.getWidth(), (texture.getHeight()/2 - TextureManager.AMMO_RED_PLASMA.getHeight()/2));
+				this.entityManager.addEntity(new Projectile(this.ammo, position, position.cpy().add(1f,0f), this.speedMultiplier));
 				this.lastFired = System.currentTimeMillis();
 			}
 		}
@@ -110,5 +117,21 @@ public class Player extends Entity {
 	
 	public static int width() {
 		return TextureManager.BLUE_SHIP_STEADY_STRAIGHT.getWidth();
+	}
+	
+	public Ammo getAmmo() {
+		return this.ammo;
+	}
+	
+	public void setAmmo(Ammo ammo) {
+		this.ammo = ammo;
+	}
+	
+	public double getSpeedMultiplier() {
+		return this.speedMultiplier;
+	}
+	
+	public void setSpeedMultiplier(double speedMultiplier) {
+		this.speedMultiplier = speedMultiplier;
 	}
 }

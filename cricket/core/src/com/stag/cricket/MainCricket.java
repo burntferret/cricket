@@ -4,6 +4,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.stag.cricket.camera.OrthoCamera;
+import com.stag.cricket.entity.EntityManager;
 import com.stag.cricket.screen.GameScreen;
 import com.stag.cricket.screen.ScreenManager;
 
@@ -12,14 +14,17 @@ public class MainCricket extends ApplicationAdapter {
 	public static int WIDTH = 800, HEIGHT = 480;
 	public static final int STARTING_LIVES = 3;
 	private SpriteBatch batch;
+	private OrthoCamera camera;
+	private EntityManager entityManager;
 	
 	@Override
 	public void create () {
 		this.batch = new SpriteBatch();
-		ScreenManager.setScreen(new GameScreen());
+		this.camera = new OrthoCamera();
+		this.entityManager = new EntityManager(this.camera);
+		ScreenManager.setScreen(new GameScreen(this.camera, this.entityManager));
 	}
 	
-
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -41,7 +46,7 @@ public class MainCricket extends ApplicationAdapter {
 	@Override
 	public void resize(int width, int height) {
 		if(ScreenManager.getCurrentScreen() != null) {
-			ScreenManager.getCurrentScreen().resize(width, height);
+			ScreenManager.getCurrentScreen().resize();
 		}
 	}
 	

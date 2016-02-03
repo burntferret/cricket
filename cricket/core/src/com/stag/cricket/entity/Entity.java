@@ -45,6 +45,10 @@ public abstract class Entity {
 		this.direction.scl(Gdx.graphics.getDeltaTime());
 	}
 	
+	public Vector2 getDirection() {
+		return this.direction;
+	}
+	
 	public Texture getTexture() { 
 		return this.texture;
 	}

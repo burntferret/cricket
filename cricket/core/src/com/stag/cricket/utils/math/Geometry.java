@@ -17,6 +17,13 @@ public class Geometry {
 		return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 	}
 	
+	public static Double getAngleInRadians(Vector2 referencePoint, Vector2 directionalPoint) {
+		float x = directionalPoint.x - referencePoint.x;
+		float y = directionalPoint.y - referencePoint.y;
+		
+		return Math.atan2(y,  x);
+	}
+	
 	/**
 	 * Calculates angle between two points relative to the first, reference point.
 	 * <p>
@@ -26,12 +33,9 @@ public class Geometry {
 	 * @return
 	 */
 	public static Double getAngleInDegrees(Vector2 referencePoint, Vector2 directionalPoint) {
-		float x = directionalPoint.x - referencePoint.x;
-		float y = directionalPoint.y - referencePoint.y;
+		double degrees = convertRadiansToDegrees(getAngleInRadians(referencePoint, directionalPoint));
 		
-		double degrees = convertRadiansToDegrees(Math.atan2(y, x));
-		
-		if(y<0) {
+		if((directionalPoint.y-referencePoint.y)<0) {
 			degrees += 360;
 		}
 		
@@ -57,10 +61,28 @@ public class Geometry {
 	}
 	
 	
+	/**
+	 * Returns a Vector2 for a specified distance away from a starting point at a specified angle.
+	 * @param angle
+	 * @param startingPoint
+	 * @param distance
+	 * @return
+	 */
 	public static Vector2 getProjectedPoint(double angle, Vector2 startingPoint, double distance) {
 		float x = (float) (Math.cos(convertDegreesToRadians(angle))*distance + startingPoint.x);
 		float y = (float) (Math.sin(convertDegreesToRadians(angle))*distance + startingPoint.y);
 		
 		return new Vector2(x, y);
 	}
+	
+	public static Vector2 getScaledVector(Vector2 startingPoint, Vector2 targetPoint, double factor) {
+		double angleInDegrees = getAngleInDegrees(startingPoint, targetPoint);
+		Vector2 target = getProjectedPoint(angleInDegrees, startingPoint, factor);
+		
+		float x = target.x-startingPoint.x;
+		float y = target.y-startingPoint.y;
+		
+		return new Vector2(x, y);
+	}
+	
 }

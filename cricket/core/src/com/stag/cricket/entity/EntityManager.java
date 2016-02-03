@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.stag.cricket.MainCricket;
 import com.stag.cricket.camera.OrthoCamera;
+import com.stag.cricket.entity.ammo.Projectile;
 
 public class EntityManager {
 	
