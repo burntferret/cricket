@@ -1,5 +1,7 @@
 package com.stag.cricket.entity.ammo;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.stag.cricket.MainCricket;
 import com.stag.cricket.entity.Entity;
@@ -28,6 +30,17 @@ public class Projectile extends Entity{
 	@Override
 	public void update() {
 		super.getPosition().add(this.direction);
+	}
+	
+	@Override
+	public void render(SpriteBatch sb) {
+		sb.draw(new TextureRegion(super.getTexture()), 
+				super.getPosition().cpy().x, 
+				super.getPosition().cpy().y, 
+				(super.getPosition().cpy().x+(super.getTexture().getWidth()/2)), 
+				(super.getPosition().cpy().y+(super.getTexture().getHeight()/2)), 
+				(float) super.getTexture().getWidth(), (float) super.getTexture().getHeight(), 
+				1f, 1f, (float) -Geometry.getSimpleVectorAngleInDegrees(this.direction));
 	}
 	
 	public boolean isOffScreen() {

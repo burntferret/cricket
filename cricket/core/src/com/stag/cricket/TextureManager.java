@@ -23,4 +23,7 @@ public class TextureManager {
 	public static Texture DIRECTIONAL_BUTTON = new Texture("controls/directionButton.png");
 	public static Texture FIRE_BUTTON = new Texture("controls/fireButton.png");
 	
+	// ENEMIES
+	public static Texture BLUE_DUDE = new Texture("monsters/blueDude.png");
+	
 }

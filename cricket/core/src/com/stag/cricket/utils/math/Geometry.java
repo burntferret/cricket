@@ -75,6 +75,15 @@ public class Geometry {
 		return new Vector2(x, y);
 	}
 	
+	
+	/**
+	 * Calculates the directional vector between the starting point and target and returns 
+	 * a scaled vector based on the input factor.
+	 * @param startingPoint
+	 * @param targetPoint
+	 * @param factor
+	 * @return
+	 */
 	public static Vector2 getScaledVector(Vector2 startingPoint, Vector2 targetPoint, double factor) {
 		double angleInDegrees = getAngleInDegrees(startingPoint, targetPoint);
 		Vector2 target = getProjectedPoint(angleInDegrees, startingPoint, factor);
@@ -83,6 +92,24 @@ public class Geometry {
 		float y = target.y-startingPoint.y;
 		
 		return new Vector2(x, y);
+	}
+	
+	/**
+	 * Returns the angle in degrees of the x/y coordinates in a vector.
+	 * @param vector
+	 * @return
+	 */
+	public static double getSimpleVectorAngleInDegrees(Vector2 vector) {
+		return convertRadiansToDegrees(getSimpleVectorAngleInRadians(vector));
+	}
+	
+	/**
+	 * Returns the angle in radians of the x/y coordinates in a vector.
+	 * @param vector
+	 * @return
+	 */
+	public static double getSimpleVectorAngleInRadians(Vector2 vector) {
+		return Math.atan2(vector.y, vector.x);
 	}
 	
 }

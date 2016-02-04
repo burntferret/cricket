@@ -63,4 +63,11 @@ public class EntityManager {
 		return projectiles;
 	}
 	
+	public Vector2 getPlayerPosition() {
+		return this.player.position.cpy();
+	}
+	
+	public Player getPlayer() {
+		return this.player;
+	}
 }
