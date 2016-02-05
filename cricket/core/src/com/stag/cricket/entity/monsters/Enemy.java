@@ -46,7 +46,7 @@ public abstract class Enemy extends Entity {
 			float y = super.getTexture().getHeight()/2 - this.ammo.getTexture().getHeight()/2;
 			
 			Projectile projectile = new Projectile(this.ammo, new Vector2(this.getPosition().cpy().add(x, y)), 
-					this.entityManager.getPlayerPosition(), this.entityManager.getPlayer().getSpeedMultiplier());
+					this.entityManager.getPlayerPosition(), this.entityManager.getPlayer().getSpeedMultiplier(), true);
 			
 			this.entityManager.addEntity(projectile);
 		}

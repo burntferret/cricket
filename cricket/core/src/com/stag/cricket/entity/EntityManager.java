@@ -30,20 +30,41 @@ public class EntityManager {
 		this.fireButton.update();
 		
 		// update all entities
-		for(Entity e : entities) {
+		for(Entity e : this.entities) {
 			e.update();
 		}
 		
-		// remove projectiles that are off screen
-		for(Projectile p : this.getProjectiles()) {
+		// get and handle all projectiles
+		Array<Projectile> allProjectiles = this.getProjectiles();
+		Array<Projectile> friendlyFire = new Array<Projectile>();
+		Array<Projectile> enemyFire = new Array<Projectile>();
+		
+		for(Projectile p : allProjectiles) {
+			
+			// remove projectiles that are off screen
 			if(p.isOffScreen()) {
-				entities.removeValue(p, false);
+				this.entities.removeValue(p, false);
+			} 
+			
+			// classify remaining into friendly and enemy
+			else {
+				if(p.isEnemyFire()) {
+					enemyFire.add(p);
+				} else {
+					friendlyFire.add(p);
+				}
+			}
+		}
+		
+		for(Projectile p : enemyFire) {
+			if(this.player.getBounds().overlaps(p.getBounds())) {
+				//TODO: need to do a game over or lose life method here
 			}
 		}
 	}
 	
 	public void render(SpriteBatch spriteBatch) {
-		for(Entity e : entities) {
+		for(Entity e : this.entities) {
 			e.render(spriteBatch);
 		}
 		
@@ -54,7 +75,7 @@ public class EntityManager {
 	
 	private Array<Projectile> getProjectiles() {
 		Array<Projectile> projectiles = new Array<Projectile>();
-		for(Entity e : entities) {
+		for(Entity e : this.entities) {
 			if(e instanceof Projectile) {
 				projectiles.add((Projectile) e);
 			}

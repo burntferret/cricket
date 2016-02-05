@@ -13,6 +13,7 @@ public class Projectile extends Entity{
 	
 	private double speedMultiplier;
 	private Vector2 direction;
+	private boolean isEnemyFire;
 
 	/**
 	 * @param tex Desired Texture
@@ -20,10 +21,10 @@ public class Projectile extends Entity{
 	 * @param targetPos This should be target position
 	 * @param playerSpeedMultiplier
 	 */
-	public Projectile(Ammo ammo, Vector2 projectilePos, Vector2 targetPos, double playerSpeedMultiplier) {
+	public Projectile(Ammo ammo, Vector2 projectilePos, Vector2 targetPos, double playerSpeedMultiplier, boolean isEnemyFire) {
 		super(ammo.getTexture(), projectilePos, targetPos);
+		this.isEnemyFire = isEnemyFire;
 		this.speedMultiplier = ammo.getSpeedMultiplier()*playerSpeedMultiplier;
-		
 		this.direction = Geometry.getScaledVector(projectilePos, targetPos, this.speedMultiplier*DEFAULT_SPEED);
 	}
 
@@ -57,4 +58,7 @@ public class Projectile extends Entity{
 		this.speedMultiplier = speedMultiplier;
 	}
 	
+	public boolean isEnemyFire() {
+		return this.isEnemyFire;
+	}
 }

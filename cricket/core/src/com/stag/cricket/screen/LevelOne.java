@@ -3,9 +3,9 @@ package com.stag.cricket.screen;
 import com.stag.cricket.camera.OrthoCamera;
 import com.stag.cricket.entity.EntityManager;
 
-public class GameScreen extends Screen {
+public class LevelOne extends Screen {
 
-	public GameScreen(OrthoCamera camera, EntityManager entityManager) {
+	public LevelOne(OrthoCamera camera, EntityManager entityManager) {
 		super(camera, entityManager);
 	}
 

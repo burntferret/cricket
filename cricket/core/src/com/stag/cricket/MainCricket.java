@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.stag.cricket.camera.OrthoCamera;
 import com.stag.cricket.entity.EntityManager;
-import com.stag.cricket.screen.GameScreen;
+import com.stag.cricket.screen.LevelOne;
 import com.stag.cricket.screen.ScreenManager;
 
 public class MainCricket extends ApplicationAdapter {
@@ -22,7 +22,7 @@ public class MainCricket extends ApplicationAdapter {
 		this.batch = new SpriteBatch();
 		this.camera = new OrthoCamera();
 		this.entityManager = new EntityManager(this.camera);
-		ScreenManager.setScreen(new GameScreen(this.camera, this.entityManager));
+		ScreenManager.setScreen(new LevelOne(this.camera, this.entityManager));
 	}
 	
 	@Override

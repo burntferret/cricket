@@ -3,6 +3,7 @@ package com.stag.cricket.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.stag.cricket.MainCricket;
 
@@ -12,12 +13,14 @@ public abstract class Entity {
 	protected Vector2 position;
 	protected Vector2 direction;
 	protected Vector2 center;
+	protected Rectangle bounds;
 	
 	public Entity(Texture tex, Vector2 pos, Vector2 dir) {
 		this.texture = tex;
 		this.position = pos;
 		this.direction = dir;
-		setCenter();
+		this.setCenter();
+		this.setBounds();
 	}
 	
 	public Vector2 getPosition() { 
@@ -59,11 +62,21 @@ public abstract class Entity {
 		this.center = new Vector2(x,y);
 	}
 	
+	private void setBounds() {
+		this.bounds = new Rectangle();
+		this.bounds.setPosition(this.position);
+		this.bounds.setSize(this.texture.getWidth(), this.texture.getHeight());
+	}
+	
 	public Vector2 getCenter() {
 		return this.center;
 	}
 	
 	public void setPosition(Vector2 position) {
 		this.position = position;
+	}
+	
+	public Rectangle getBounds() {
+		return this.bounds;
 	}
 }

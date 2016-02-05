@@ -105,7 +105,7 @@ public class Player extends Entity {
 		if(isFireButtonPressed) {
 			if(System.currentTimeMillis() - this.lastFired >= STARTING_FIRE_INTERVAL) {
 				Vector2 position =  super.getPosition().cpy().add(texture.getWidth(), (texture.getHeight()/2 - TextureManager.AMMO_RED_PLASMA.getHeight()/2));
-				this.entityManager.addEntity(new Projectile(this.ammo, position, position.cpy().add(1f,0f), this.speedMultiplier));
+				this.entityManager.addEntity(new Projectile(this.ammo, position, position.cpy().add(1f,0f), this.speedMultiplier, false));
 				this.lastFired = System.currentTimeMillis();
 			}
 		}
