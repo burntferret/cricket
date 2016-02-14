@@ -9,7 +9,6 @@ public class ScreenManager {
 			currentScreen.dispose();
 		}
 		currentScreen = screen;
-		currentScreen.create();
 	}
 	
 	public static Screen getCurrentScreen() {

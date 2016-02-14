@@ -15,6 +15,10 @@ public abstract class Screen {
 		this.entityManager = entityManager;
 	}
 	
+	public EntityManager getEntityManaget() {
+		return this.entityManager;
+	}
+	
 	public void setHasEnded(boolean hasEnded) {
 		this.hasEnded = hasEnded;
 	}
@@ -38,8 +42,6 @@ public abstract class Screen {
 	/*
 	 * Abstract methods
 	 */
-	public abstract void create();
-	
 	public abstract void dispose();
 	
 	public abstract void pause();

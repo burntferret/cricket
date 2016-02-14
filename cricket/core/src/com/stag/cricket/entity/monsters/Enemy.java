@@ -51,4 +51,7 @@ public abstract class Enemy extends Entity {
 			this.entityManager.addEntity(projectile);
 		}
 	}
+	
+	public abstract float getMinMovementSpeed();
+	public abstract float getMaxMovementSpeed();
 }
