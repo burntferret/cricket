@@ -30,6 +30,7 @@ public class Projectile extends Entity{
 
 	@Override
 	public void update() {
+		
 		super.getPosition().add(this.direction);
 	}
 	
@@ -38,15 +39,23 @@ public class Projectile extends Entity{
 		sb.draw(new TextureRegion(super.getTexture()), 
 				super.getPosition().cpy().x, 
 				super.getPosition().cpy().y, 
-				(super.getPosition().cpy().x+(super.getTexture().getWidth()/2)), 
-				(super.getPosition().cpy().y+(super.getTexture().getHeight()/2)), 
+				0f, 
+				0f, 
 				(float) super.getTexture().getWidth(), (float) super.getTexture().getHeight(), 
-				1f, 1f, (float) -Geometry.getSimpleVectorAngleInDegrees(this.direction));
+				1f, 1f, (float) Geometry.getSimpleVectorAngleInDegrees(this.direction));
 	}
 	
+	/**
+	 * Tests to see if the projectile is outside the realms of the screen.
+	 * <p>
+	 * Should not matter whether or not the projectile is enemy or player fire, and which
+	 * side of the screen the projectile is outside of. 
+	 * @return
+	 */
 	public boolean isOffScreen() {
 		return  super.getPosition().y >= MainCricket.HEIGHT || 
-			    (super.getPosition().x - super.getTexture().getWidth()) <= 0 ||
+				super.getPosition().y <= 0 || 
+			    ((super.getPosition().x - super.getTexture().getWidth()) <= 0) ||
 			    super.getPosition().x > MainCricket.WIDTH;
 	}
 	

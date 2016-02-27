@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.stag.cricket.MainCricket;
 import com.stag.cricket.camera.OrthoCamera;
 import com.stag.cricket.entity.ammo.Projectile;
+import com.stag.cricket.entity.monsters.Enemy;
 
 public class EntityManager {
 	
@@ -29,29 +30,34 @@ public class EntityManager {
 		this.directionalCluster.update();
 		this.fireButton.update();
 		
-		// update all entities
-		for(Entity e : this.entities) {
-			e.update();
-		}
-		
-		// get and handle all projectiles
-		Array<Projectile> allProjectiles = this.getProjectiles();
+		Array<Enemy> enemies = new Array<Enemy>();
 		Array<Projectile> friendlyFire = new Array<Projectile>();
 		Array<Projectile> enemyFire = new Array<Projectile>();
 		
-		for(Projectile p : allProjectiles) {
+		// update all entities and sort entities into nice groups
+		for(Entity e : this.entities) {
+			e.update();
 			
-			// remove projectiles that are off screen
-			if(p.isOffScreen()) {
-				this.entities.removeValue(p, false);
+			// check if enemy
+			if(e instanceof Enemy) {
+				enemies.add((Enemy) e);
 			} 
 			
-			// classify remaining into friendly and enemy
-			else {
-				if(p.isEnemyFire()) {
-					enemyFire.add(p);
-				} else {
-					friendlyFire.add(p);
+			// check if projectile
+			else if(e instanceof Projectile) {
+				
+				// check to see if it is off screen, if so delete it
+				if(((Projectile) e).isOffScreen()) {
+					this.entities.removeValue(e, false);
+				} 
+				
+				// if not off screen, sort enemy and friendly fire
+				else {
+					if(((Projectile) e).isEnemyFire()) {
+						enemyFire.add((Projectile) e);
+					} else {
+						friendlyFire.add((Projectile) e);
+					}
 				}
 			}
 		}
@@ -71,17 +77,6 @@ public class EntityManager {
 		this.player.render(spriteBatch);
 		this.directionalCluster.render(spriteBatch);
 		this.fireButton.render(spriteBatch);
-	}
-	
-	private Array<Projectile> getProjectiles() {
-		Array<Projectile> projectiles = new Array<Projectile>();
-		for(Entity e : this.entities) {
-			if(e instanceof Projectile) {
-				projectiles.add((Projectile) e);
-			}
-		}
-		
-		return projectiles;
 	}
 	
 	public Vector2 getPlayerPosition() {

@@ -8,7 +8,7 @@ import com.stag.cricket.entity.ammo.Ammo;
 
 public class BlueDude extends Enemy{
 
-	public static final int MAXIMUM_FIRE_FREQUENCY = 1000;
+	public static final int MAXIMUM_FIRE_FREQUENCY = 3000;
 	public static final double LUCK = 0.5;
 	public static final float MIN_MOVEMENT_SPEED = 1;
 	public static final float MAX_MOVEMENT_SPEED = 5;

@@ -50,7 +50,7 @@ public class LevelOne extends Level {
 			double distance = 0;
 			double tempDistance = 0; 
 			
-			for(int j=0; distance < MINIMUM_DISTANCE; j++) {
+			for(int j=0; distance < MINIMUM_DISTANCE && j < 50; j++) {
 				float x = MathUtils.random((float) (MainCricket.WIDTH*MINIMUM_DISTANCE_MULTIPLIER), (float) (MainCricket.WIDTH*MAXIMUM_DISTANCE_MULTIPLIER));
 				float y = MathUtils.random(0, (float) (MainCricket.HEIGHT-enemy.getTexture().getHeight()));
 				

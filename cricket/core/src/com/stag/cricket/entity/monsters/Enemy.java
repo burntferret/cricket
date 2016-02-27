@@ -2,16 +2,19 @@ package com.stag.cricket.entity.monsters;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.stag.cricket.MainCricket;
 import com.stag.cricket.entity.Entity;
 import com.stag.cricket.entity.EntityManager;
+import com.stag.cricket.entity.Player;
 import com.stag.cricket.entity.ammo.Ammo;
 import com.stag.cricket.entity.ammo.Projectile;
+import com.stag.cricket.utils.math.Geometry;
 
 public abstract class Enemy extends Entity {
 	
 	private EntityManager entityManager;
 	private Ammo ammo;
-	private int lastFired;
+	private long lastFired;
 	private int maximumFireFrequency;
 	private double luck;
 	
@@ -32,7 +35,7 @@ public abstract class Enemy extends Entity {
 		this.ammo = ammo;
 	}
 	
-	public int getLastFired() {
+	public long getLastFired() {
 		return this.lastFired;
 	}
 	
@@ -41,12 +44,20 @@ public abstract class Enemy extends Entity {
 	}
 	
 	public void fire() {
-		if((int) Math.random() >= this.luck && System.currentTimeMillis()-this.lastFired >= this.maximumFireFrequency) {
-			float x = -this.ammo.getTexture().getWidth();
-			float y = super.getTexture().getHeight()/2 - this.ammo.getTexture().getHeight()/2;
+		boolean isGreaterThanLuck = Math.random() >= this.luck;
+		boolean isReadyForFire = System.currentTimeMillis()-this.lastFired >= this.maximumFireFrequency;
+		boolean isOnScreen = this.position.x < MainCricket.WIDTH;
+		boolean isFrontOfPlayer = this.entityManager.getPlayerPosition().cpy().x < this.position.x;
+		
+		if(isOnScreen && isFrontOfPlayer && isGreaterThanLuck && isReadyForFire) {
+			this.lastFired = System.currentTimeMillis();
+			Texture tex = this.entityManager.getPlayer().getTexture();
+			Vector2 playerPosition = this.entityManager.getPlayerPosition().cpy().add(tex.getWidth()*3/4, tex.getHeight()/2);
 			
-			Projectile projectile = new Projectile(this.ammo, new Vector2(this.getPosition().cpy().add(x, y)), 
-					this.entityManager.getPlayerPosition(), this.entityManager.getPlayer().getSpeedMultiplier(), true);
+			Vector2 projectilePosition = new Vector2(super.getPosition().cpy());
+			Vector2 targetPosition = new Vector2(playerPosition);
+			
+			Projectile projectile = new Projectile(this.ammo, projectilePosition, targetPosition, 1f, true);
 			
 			this.entityManager.addEntity(projectile);
 		}
